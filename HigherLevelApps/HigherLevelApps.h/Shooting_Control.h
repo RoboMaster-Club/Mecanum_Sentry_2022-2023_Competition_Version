@@ -18,9 +18,9 @@
 #include "Ramp_Calc.h"
 #include "Referee_System.h"
 
-#define FRIC_SPEED_SLOW 7000
-#define FRIC_SPEED_16 5300		  // Tested value for 16m/s
-#define FRIC_SPEED_28 6000		  // Tested value for 28m/s
+#define FRIC_SPEED_SLOW 8200//7000
+#define FRIC_SPEED_16 8200 //5300		  // Tested value for 16m/s
+#define FRIC_SPEED_28 8200 //6000		  // Tested value for 28m/s
 #define LEFT_TRIGGER_DIRECTION 1  // Trigger motor direction
 #define RIGHT_TRIGGER_DIRECTION 1 // Trigger motor direction
 #define FRIC_LEFT_DIRECTION -1	  // Left friction wheel motor direction
@@ -49,15 +49,18 @@ typedef struct
 
 	struct
 	{
-		float Target_Angle;
-		float Target_Speed;
+		float Left_Target_Angle;
+		float Left_Target_Speed;
+		float Right_Target_Angle;
+		float Right_Target_Speed;
 	} Trigger;
 
 	struct
 	{
 		uint8_t Turned_On;
 	} Fric_Wheel;
-
+	int16_t Left_Click_Counter;
+	int16_t Right_Click_Counter;
 	uint8_t Fric_Wheel_Ready_Flag;
 } Shooting_t;
 
