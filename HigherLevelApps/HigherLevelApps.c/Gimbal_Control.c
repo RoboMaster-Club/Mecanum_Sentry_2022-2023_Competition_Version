@@ -23,6 +23,7 @@ Gimbal_Func_t Gimbal_Func = Gimbal_Func_GroundInit;
 //stuff michael added for basic searching
 float search_yaw_count = 0;
 float search_yaw = 0; 
+float search_yaw_center = 0;
 
 Gimbal_t Gimbal;
 void Gimbal_Init(void)
@@ -111,15 +112,24 @@ void Gimbal_Processing(Gimbal_t *Gimbal)
 		//stuff Michael Li added
 		{
 			
-			search_yaw = 100*cos(search_yaw_count * PI / 180.0);
+			search_yaw = 60*cos(search_yaw_count * PI / 180.0) + search_yaw_center;
 
 			// Reset the target angle so gimbal doesn't spin like crazy
 			if (Gimbal->Prev_Mode != Search_For_Bad_Guys)
 				Gimbal->Target_Yaw = Gimbal->Current_Yaw;
 			
 			// soft update
-			Gimbal->Target_Yaw_Speed = Gimbal->Target_Yaw_Speed * 0.85f + 0.15f * PID_Func.Positional_PID_Min_Error(&Yaw_Angle_Follow_PID, search_yaw, Gimbal->Current_Yaw, 0.0);
-			GM6020_Yaw.Output_Current = GM6020_Yaw.Output_Current * 0.85f + 0.15f * PID_Func.Positional_PID_Min_Error(&Yaw_Speed_Follow_PID, search_yaw, Gimbal->Current_Yaw_Speed, 0.0);
+			if(!Gimbal->On_Command){ //no input received
+				Gimbal->Target_Yaw_Speed = Gimbal->Target_Yaw_Speed * 0.85f + 0.15f * PID_Func.Positional_PID_Min_Error(&Yaw_Angle_Follow_PID, (search_yaw - Gimbal->Current_Yaw), Gimbal->Current_Yaw, 0.0);
+				GM6020_Yaw.Output_Current = GM6020_Yaw.Output_Current * 0.85f + 0.15f * PID_Func.Positional_PID_Min_Error(&Yaw_Speed_Follow_PID, (search_yaw - Gimbal->Current_Yaw), Gimbal->Current_Yaw_Speed, 0.0);
+
+				
+			}else{ //input received
+				Gimbal->Target_Yaw_Speed = Gimbal->Target_Yaw_Speed * 0.85f + 0.15f * PID_Func.Positional_PID_Min_Error(&Yaw_Angle_Follow_PID, Gimbal->Target_Yaw, Gimbal->Current_Yaw, 0.0);
+				GM6020_Yaw.Output_Current = GM6020_Yaw.Output_Current * 0.85f + 0.15f * PID_Func.Positional_PID_Min_Error(&Yaw_Speed_Follow_PID, Gimbal->Target_Yaw_Speed, Gimbal->Current_Yaw_Speed, 0.0);
+				search_yaw_count = 0;
+				search_yaw_center = Gimbal->Current_Yaw;
+			}
 			
 			Gimbal->Current_Pitch = PITCH_DIRECTION * Board_A_IMU.Export_Data.Pitch;
 			Gimbal->Pitch_Angle_Output = PID_Func.Positional_PID(&Pitch_Angle_PID, Gimbal->Target_Pitch, -Gimbal->Current_Pitch);
@@ -129,7 +139,7 @@ void Gimbal_Processing(Gimbal_t *Gimbal)
 
 			//stuff michael added
 			if(search_yaw_count <= 360)
-				search_yaw_count += 0.2; //change value to change speed
+				search_yaw_count += 0.2; //change value to change position
 			else
 				search_yaw_count -=360;
 
