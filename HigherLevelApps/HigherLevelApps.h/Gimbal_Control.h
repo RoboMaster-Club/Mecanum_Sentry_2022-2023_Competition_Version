@@ -23,7 +23,7 @@
 #define YAW_MID_MECH_ANGLE 2691	  // This is measured for yaw origin
 #define PITCH_DIRECTION 1		  // Pitch motor direction
 #define PITCH_MID_MECH_ANGLE 5241 // This is measured for pitch origin
-#define PITCH_LOWER_LIMIT -23.0f  // Pitch cannot rotate 360 degree, so these are the limits in mechanical angle
+#define PITCH_LOWER_LIMIT -18.0f  // Pitch cannot rotate 360 degree, so these are the limits in mechanical angle
 #define PITCH_UPPER_LIMIT 30.0f
 
 #define Gimbal_Func_GroundInit        \
