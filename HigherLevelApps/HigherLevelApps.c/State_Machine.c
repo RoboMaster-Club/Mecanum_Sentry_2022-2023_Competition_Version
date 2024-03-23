@@ -57,8 +57,11 @@ void Remote_Control_Update(void)
 		}
 		case (SWITCH_UP):
 		{
-			Chassis.Current_Mode = Auto_Navigation;//Spin_Top;
-			Gimbal.Current_Mode = Auto_Navigation;
+			//Chassis.Current_Mode = Auto_Navigation;//Spin_Top;
+			//Gimbal.Current_Mode = Auto_Navigation;
+
+			Chassis.Current_Mode = Follow_Gimbal;
+			Gimbal.Current_Mode = Follow_Gimbal;
 
 			break;
 		}
@@ -144,7 +147,7 @@ void Computer_Update(void)
 			}
 		}
 
-		else if (DR16_Export_Data.Keyboard.Press_G.Switch_Flag)
+		/*else if (DR16_Export_Data.Keyboard.Press_G.Switch_Flag)
 		{
 			if (Chassis.Current_Mode == Spin_Top && Gimbal.Current_Mode == Spin_Top)
 			{
@@ -156,7 +159,7 @@ void Computer_Update(void)
 				Chassis.Current_Mode = Spin_Top;
 				Gimbal.Current_Mode = Spin_Top;
 			}
-		}
+		}*/
 
 		else if (DR16_Export_Data.Keyboard.Press_B.Switch_Flag)
 		{

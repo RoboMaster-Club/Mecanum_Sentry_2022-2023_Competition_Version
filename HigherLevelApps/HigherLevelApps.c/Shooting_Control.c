@@ -65,19 +65,18 @@ void Trigger_Get_Data(Shooting_t *Shooting)
 		{
 			Shooting->Left_Click_Counter++;
 			
-			if(Shooting->Left_Click_Counter < 10)
+			if(Shooting->Left_Click_Counter < 200)
 			{
 				Shooting->Type.Left_Single_Fire_Flag = 1;
-				Shooting->Type.Left_Burst_Flag = 0;
+				//Shooting->Type.Left_Burst_Flag = 0;
 			}
 			
-			else if(Shooting->Left_Click_Counter >= 10)
+			else if(Shooting->Left_Click_Counter >= 200)
 			{
 				Shooting->Type.Left_Single_Fire_Flag = 0;
-				Shooting->Type.Left_Burst_Flag = 1;
+				//Shooting->Type.Left_Burst_Flag = 1;
 			}
 		}
-		
 		else
 		{
 			Shooting->Left_Click_Counter = 0;
@@ -88,16 +87,16 @@ void Trigger_Get_Data(Shooting_t *Shooting)
 		{
 			Shooting->Right_Click_Counter++;
 			
-			if(Shooting->Right_Click_Counter < 10)
+			if(Shooting->Right_Click_Counter < 200)
 			{
 				Shooting->Type.Right_Single_Fire_Flag = 1;
-				Shooting->Type.Right_Burst_Flag = 0;
+				//Shooting->Type.Right_Burst_Flag = 0;
 			}
 			
-			else if(Shooting->Right_Click_Counter >= 10)
+			else if(Shooting->Right_Click_Counter >= 200)
 			{
 				Shooting->Type.Right_Single_Fire_Flag = 0;
-				Shooting->Type.Right_Burst_Flag = 1;
+				//Shooting->Type.Right_Burst_Flag = 1;
 			}
 		}
 		
@@ -142,7 +141,7 @@ void Shooting_Processing(Shooting_t *Shooting)
 		else if(State_Machine.Control_Source == Computer)
 			{
 				//First calculate target angle for single fire
-				if(Shooting->Type.Left_Single_Fire_Flag && (Shooting->Type.Left_Single_Fire_Flag == 0))
+				if(Shooting->Type.Left_Single_Fire_Flag && (Shooting->Type.Left_Single_Fired_Flag == 0))
 				{
 					Shooting->Trigger.Left_Target_Angle = M2006_Trigger[0].Total_Angle + LEFT_TRIGGER_DIRECTION * M2006_ANGLE_1_BULLET;
 					Shooting->Type.Left_Single_Fired_Flag = 1;
@@ -166,7 +165,7 @@ void Shooting_Processing(Shooting_t *Shooting)
 				else
 					M2006_Trigger[0].Output_Current = 0;
 				
-				if(Shooting->Type.Right_Single_Fire_Flag && (Shooting->Type.Right_Single_Fire_Flag == 0))
+				if(Shooting->Type.Right_Single_Fire_Flag && (Shooting->Type.Right_Single_Fired_Flag == 0))
 				{
 					Shooting->Trigger.Right_Target_Angle = M2006_Trigger[1].Total_Angle + RIGHT_TRIGGER_DIRECTION * M2006_ANGLE_1_BULLET;
 					Shooting->Type.Right_Single_Fired_Flag = 1;
@@ -244,7 +243,7 @@ void Shooting_Disabled(void)
 	PID_Func.Clear_PID_Data(&Trigger_Speed_PID);
 	DR16_Export_Data.Mouse.Click_Counter = 0;
 	Shooting.Type.Left_Single_Fire_Flag = 0;
-	Shooting.Type.Left_Burst_Flag = 0;
+	//Shooting.Type.Left_Burst_Flag = 0;
 	Shooting.Type.Right_Single_Fire_Flag = 0;
-	Shooting.Type.Right_Burst_Flag = 0;
+	//Shooting.Type.Right_Burst_Flag = 0;
 }

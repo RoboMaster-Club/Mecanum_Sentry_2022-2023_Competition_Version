@@ -19,7 +19,7 @@
 #include "Referee_System.h"
 
 #define FRIC_SPEED_SLOW 8200//7000
-#define FRIC_SPEED_16 8200 //5300		  // Tested value for 16m/s
+#define FRIC_SPEED_16 5000		//5300		  			// Tested value for 16m/s
 #define FRIC_SPEED_28 8200 //6000		  // Tested value for 28m/s
 #define LEFT_TRIGGER_DIRECTION 1  // Trigger motor direction
 #define RIGHT_TRIGGER_DIRECTION 1 // Trigger motor direction

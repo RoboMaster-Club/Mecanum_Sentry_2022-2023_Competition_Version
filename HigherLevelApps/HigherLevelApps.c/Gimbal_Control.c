@@ -51,8 +51,8 @@ void Gimbal_Control_Get_Data(Gimbal_t *Gimbal)
 
 	else if (State_Machine.Control_Source == Computer)
 	{
-		Gimbal->Target_Yaw -= (float)DR16_Export_Data.Mouse.x / 60.0f;
-		Gimbal->Target_Pitch -= (float)DR16_Export_Data.Mouse.y / 5.0f;
+		Gimbal->Target_Yaw -= (float)DR16_Export_Data.Mouse.x / 75.0f;
+		Gimbal->Target_Pitch -= (float)DR16_Export_Data.Mouse.y / 20.0f;
 		Gimbal->Target_Pitch = VAL_LIMIT(Gimbal->Target_Pitch, PITCH_UPPER_LIMIT, PITCH_LOWER_LIMIT);
 	}
 }
