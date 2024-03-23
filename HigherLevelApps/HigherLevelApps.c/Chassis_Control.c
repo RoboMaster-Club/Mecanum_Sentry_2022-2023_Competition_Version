@@ -117,9 +117,14 @@ void Chassis_Processing(Chassis_t *Chassis)
 		case (Auto_Aiming):
 		{
 			// The gimbal coordinate is converted to chassis coordinate through trigonometry
-			Chassis->Chassis_Coord.Vx = 0;
-			Chassis->Chassis_Coord.Vy = 0;
+			// Chassis->Chassis_Coord.Vx = 0;
+			// Chassis->Chassis_Coord.Vy = 0;
+			// Chassis->Chassis_Coord.Wz = 0;
+
+			Chassis->Chassis_Coord.Vx = Chassis->Gimbal_Coord.Vx * cos(Gimbal.Angle_Difference) - Chassis->Gimbal_Coord.Vy * sin(Gimbal.Angle_Difference);
+			Chassis->Chassis_Coord.Vy = Chassis->Gimbal_Coord.Vx * sin(Gimbal.Angle_Difference) + Chassis->Gimbal_Coord.Vy * cos(Gimbal.Angle_Difference);
 			Chassis->Chassis_Coord.Wz = 0;
+			// Chassis->Chassis_Coord.Wz = Chassis->Gimbal_Coord.Wz +  DR16_Export_Data.Remote_Control.Joystick_Right_Vx / 3000.0f;
 
 			break;
 		}

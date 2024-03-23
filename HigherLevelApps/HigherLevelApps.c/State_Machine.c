@@ -77,8 +77,8 @@ void Remote_Control_Update(void)
 	}
 
 	/*
-	Right switch up, left switch down: turn on friction wheel
-	Right switch up, left switch mid: turn off friction wheel
+	Right switch up, left switch down: turn off friction wheel
+	Right switch up, left switch mid: turn on friction wheel
 	Right switch up, left switch up: enter computer control mode
 	*/
 	else if (DR16_Export_Data.Remote_Control.Right_Switch == SWITCH_UP)
