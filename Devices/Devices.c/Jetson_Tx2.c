@@ -67,6 +67,8 @@ void Jetson_Tx2_Send_Data(UART_HandleTypeDef *huart)
 	Tx2_Data.Sending.Orientation = RBG_Pose.Orientation;
 	Tx2_Data.Sending.Velocity_X = RBG_Pose.Velocity_X / 1000.0f;
 	Tx2_Data.Sending.Velocity_Y = RBG_Pose.Velocity_Y / 1000.0f;
+	Tx2_Data.Sending.Game_Start_Flag = (Referee_System.Game_Status.Progress == 4) ? 1 : 0; //4 for match begin
+	Tx2_Data.Sending.Enemy_Color_Flag = (Referee_System.Robot_State.ID > 11) ? 1 : 0; //ID > 11 means myself is blue, which means enemy is red
 	
 	Tx2_Data.Sending.Raw_Data.data[0] = Tx2_Data.Sending.Pitch_Angle;
 	Tx2_Data.Sending.Raw_Data.data[1] = Tx2_Data.Sending.Pitch_Angular_Rate;
@@ -78,7 +80,8 @@ void Jetson_Tx2_Send_Data(UART_HandleTypeDef *huart)
 	Tx2_Data.Sending.Raw_Data.data[7] = Tx2_Data.Sending.Velocity_Y;
 	
 	Tx2_Data.Tx_Buffer[0] = 0xAA;
-	memcpy(&Tx2_Data.Tx_Buffer[1],&Tx2_Data.Sending.Raw_Data.Data[0],32*sizeof(uint8_t));
+	Tx2_Data.Tx_Buffer[1] = Tx2_Data.Sending.Enemy_Color_Flag << 1 | Tx2_Data.Sending.Game_Start_Flag;
+	memcpy(&Tx2_Data.Tx_Buffer[2],&Tx2_Data.Sending.Raw_Data.Data[0],32*sizeof(uint8_t));
 	
 	HAL_UART_Transmit(&huart7, Tx2_Data.Tx_Buffer, sizeof(Tx2_Data.Tx_Buffer),10);
 }

@@ -17,6 +17,7 @@
 #include "Board_A_IMU.h"
 #include "User_Defined_Math.h"
 #include "Odometry.h"
+#include "Referee_System.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -33,7 +34,7 @@
 typedef struct
 {
 	uint8_t Rx_Buffer[20];
-	uint8_t Tx_Buffer[33];
+	uint8_t Tx_Buffer[34];
 	
 	struct
 	{
@@ -45,6 +46,8 @@ typedef struct
     float Orientation; //rad
 		float Velocity_X; //m/s
 		float Velocity_Y; //m/s
+		uint8_t Game_Start_Flag; //1 for start and 0 for not start
+		uint8_t Enemy_Color_Flag; //1 for red and 0 for blue
 		
 		union
 		{

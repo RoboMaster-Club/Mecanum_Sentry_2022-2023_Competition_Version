@@ -191,8 +191,8 @@ typedef __packed struct
 	
 	struct __attribute__ ((__packed__))
 	{
-		uint8_t Type;
-		uint8_t Progress;
+		uint8_t Type:4;
+		uint8_t Progress:4;
 		uint16_t Remaining_Time;
 		uint64_t Sync_Time_Stamp;
 	}Game_Status;
