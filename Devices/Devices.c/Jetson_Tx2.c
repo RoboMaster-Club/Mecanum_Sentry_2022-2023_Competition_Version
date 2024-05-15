@@ -10,6 +10,7 @@
  */
 
 #include "Jetson_Tx2.h"
+#include "State_Machine.h"
 
 void Jetson_Tx2_Handler(UART_HandleTypeDef *huart);
 void Jetson_Tx2_USART_Receive_DMA(UART_HandleTypeDef *huartx);
@@ -31,12 +32,26 @@ void Jetson_Tx2_Get_Data(void)
 		switch(Tx2_Data.Receiving.Frame_Type)
 		{
 			case 0:
+				// Sentry will send either an auto-aim or nav package, we will set the mode depending on the package
+				if (Chassis.Current_Mode != Auto_Aiming || Gimbal.Current_Mode != Auto_Aiming)
+				{
+					Chassis.Current_Mode = Auto_Aiming;
+					Gimbal.Current_Mode = Auto_Aiming;
+				}
+			
 				memcpy(&Tx2_Data.Receiving.Raw_Data.Data[0],&Tx2_Data.Rx_Buffer[4],8*sizeof(uint8_t));
 				Tx2_Data.Receiving.Auto_Aiming.Yaw = Tx2_Data.Receiving.Raw_Data.data[0];
 				Tx2_Data.Receiving.Auto_Aiming.Pitch = Tx2_Data.Receiving.Raw_Data.data[1];
 				break;
 			
 			case 1:
+				// Sentry will send either an auto-aim or nav package, we will set the mode depending on the package
+				if (Chassis.Current_Mode != Auto_Navigation || Gimbal.Current_Mode != Auto_Navigation)
+				{
+					Chassis.Current_Mode = Auto_Navigation;
+					Gimbal.Current_Mode = Auto_Navigation;
+				}
+			
 				memcpy(&Tx2_Data.Receiving.Raw_Data.Data[0],&Tx2_Data.Rx_Buffer[4],12*sizeof(uint8_t));
 				Tx2_Data.Receiving.Navigation.X_Vel = Tx2_Data.Receiving.Raw_Data.data[0];
 				Tx2_Data.Receiving.Navigation.Y_Vel = Tx2_Data.Receiving.Raw_Data.data[1];

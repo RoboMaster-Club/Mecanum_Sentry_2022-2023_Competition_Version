@@ -50,15 +50,17 @@ void Remote_Control_Update(void)
 		}
 		case (SWITCH_MID):
 		{
-			Chassis.Current_Mode = Auto_Aiming;
-			Gimbal.Current_Mode = Auto_Aiming;
+			// Do not set auto-aim or nav mode manually, already switches to correct mode based on UART package
+			// Chassis.Current_Mode = Auto_Aiming;
+			// Gimbal.Current_Mode = Auto_Aiming;
 
 			break;
 		}
 		case (SWITCH_UP):
 		{
-			Chassis.Current_Mode = Auto_Navigation;//Spin_Top;
-			Gimbal.Current_Mode = Auto_Navigation;
+			// Do not set auto-aim or nav mode manually, already switches to correct mode based on UART package
+			// Chassis.Current_Mode = Auto_Navigation;//Spin_Top;
+			// Gimbal.Current_Mode = Auto_Navigation;
 
 			//Chassis.Current_Mode = Follow_Gimbal;
 			//Gimbal.Current_Mode = Follow_Gimbal;
