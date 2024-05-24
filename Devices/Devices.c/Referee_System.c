@@ -242,51 +242,6 @@ void Referee_Get_Data(uint16_t Data_Length)
                 else
                     n++;
                 break;
-						case REFEREE_DART_CLIENT:
-                if (CRC_Verif_Func.Verify_CRC16_Check_Sum(Referee_System.Buffer + n, REFEREE_DART_CLIENT_LEN))
-                {
-                    memcpy(&Referee_System.Dart_Client, &Referee_System.Buffer[n + 7], sizeof(uint8_t[REFEREE_DART_CLIENT_LEN-9]));
-                    n += REFEREE_DART_CLIENT_LEN;
-                }
-                else
-                    n++;
-                break;
-						case REFEREE_GROUND_POS:
-                if (CRC_Verif_Func.Verify_CRC16_Check_Sum(Referee_System.Buffer + n, REFEREE_GROUND_POS_LEN))
-                {
-                    memcpy(&Referee_System.Ground_Pos, &Referee_System.Buffer[n + 7], sizeof(uint8_t[REFEREE_GROUND_POS_LEN-9]));
-                    n += REFEREE_GROUND_POS_LEN;
-                }
-                else
-                    n++;
-                break;
-						case REFEREE_RADAR_PROGRESS:
-                if (CRC_Verif_Func.Verify_CRC16_Check_Sum(Referee_System.Buffer + n, REFEREE_RADAR_PROGRESS_LEN))
-                {
-                    memcpy(&Referee_System.Radar_Progress, &Referee_System.Buffer[n + 7], sizeof(uint8_t[REFEREE_RADAR_PROGRESS_LEN-9]));
-                    n += REFEREE_RADAR_PROGRESS_LEN;
-                }
-                else
-                    n++;
-                break;
-						case REFEREE_SENTRY_DECISION:
-                if (CRC_Verif_Func.Verify_CRC16_Check_Sum(Referee_System.Buffer + n, REFEREE_SENTRY_DECISION_LEN))
-                {
-                    memcpy(&Referee_System.Sentry_Decision, &Referee_System.Buffer[n + 7], sizeof(uint8_t[REFEREE_SENTRY_DECISION_LEN-9]));
-                    n += REFEREE_SENTRY_DECISION_LEN;
-                }
-                else
-                    n++;
-                break;
-						case REFEREE_RADAR_DECISION:
-                if (CRC_Verif_Func.Verify_CRC16_Check_Sum(Referee_System.Buffer + n, REFEREE_RADAR_DECISION_LEN))
-                {
-                    memcpy(&Referee_System.Radar_Decision, &Referee_System.Buffer[n + 7], sizeof(uint8_t[REFEREE_RADAR_DECISION_LEN-9]));
-                    n += REFEREE_RADAR_DECISION_LEN;
-                }
-                else
-                    n++;
-                break;
             default:
                 n++;
                 break;
