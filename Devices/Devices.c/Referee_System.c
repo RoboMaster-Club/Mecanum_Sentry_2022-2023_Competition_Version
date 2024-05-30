@@ -28,11 +28,12 @@ void Referee_Set_Robot_State(void)
     Referee_Robot_State.ID = Referee_System.Robot_State.ID;
     Referee_Robot_State.Level = Referee_System.Robot_State.Level;
 
-    Referee_Robot_State.Cooling_Rate = SENTRY_COOLING_RATE;
-    Referee_Robot_State.Heat_Max = SENTRY_HEAT_MAX;
-    Referee_Robot_State.Launch_Speed_Max = SENTRY_LAUNCH_SPEED_MAX;
-    Referee_Robot_State.Chassis_Power_Max = SENTRY_POWER_MAX;
+    Referee_Robot_State.Cooling_Rate = DEFAULT_SENTRY_COOLING_RATE;
+    Referee_Robot_State.Heat_Max = DEFAULT_SENTRY_HEAT_MAX;
+    Referee_Robot_State.Launch_Speed_Max = DEFAULT_SENTRY_LAUNCH_SPEED_MAX;
+    Referee_Robot_State.Chassis_Power_Max = DEFAULT_SENTRY_POWER_MAX;
 
+    Referee_Robot_State.Current_HP = Referee_System.Robot_State.Remaining_HP;
     Referee_Robot_State.Chassis_Power = Referee_System.Power_Heat.Chassis_Power;
     Referee_Robot_State.Power_Buffer = Referee_System.Power_Heat.Chassis_Power_Buffer;
     Referee_Robot_State.Shooter_Heat_1 = Referee_System.Power_Heat.Shooter_1_17mm_Heat;
@@ -198,10 +199,10 @@ void Referee_Get_Data(uint16_t Data_Length)
                     n++;
                 break;
 						case REFEREE_AERIAL_DATA:
-                if (CRC_Verif_Func.Verify_CRC16_Check_Sum(Referee_System.Buffer + n, REFEREE_AERIAL_DATA))
+                if (CRC_Verif_Func.Verify_CRC16_Check_Sum(Referee_System.Buffer + n, REFEREE_AERIAL_DATA_LEN))
                 {
-                    memcpy(&Referee_System.Aerial_Data, &Referee_System.Buffer[n + 7], sizeof(uint8_t[REFEREE_AERIAL_DATA-9]));
-                    n += REFEREE_AERIAL_DATA;
+                    memcpy(&Referee_System.Aerial_Data, &Referee_System.Buffer[n + 7], sizeof(uint8_t[REFEREE_AERIAL_DATA_LEN-9]));
+                    n += REFEREE_AERIAL_DATA_LEN;
                 }
                 else
                     n++;

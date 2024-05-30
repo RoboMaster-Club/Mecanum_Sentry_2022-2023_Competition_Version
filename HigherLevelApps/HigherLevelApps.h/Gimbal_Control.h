@@ -17,7 +17,7 @@
 #include "Robot_Control.h"
 #include "Board_A_IMU.h"
 #include "MPU6050_IMU.h"
-#include "Jetson_Tx2.h"
+#include "Jetson_Orin.h"
 
 #define YAW_DIRECTION 1			  // Yaw motor direction
 #define YAW_MID_MECH_ANGLE 2691	  // This is measured for yaw origin

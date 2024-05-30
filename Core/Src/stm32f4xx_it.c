@@ -26,7 +26,7 @@
 #include "CAN_Setup.h"
 #include "MPU6050_IMU.h"
 #include "Referee_System.h"
-#include "Jetson_Tx2.h"
+#include "Jetson_Orin.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -317,7 +317,7 @@ void UART7_IRQHandler(void)
   /* USER CODE BEGIN UART7_IRQn 0 */
 	if (__HAL_UART_GET_FLAG(&huart7, UART_FLAG_IDLE) && __HAL_UART_GET_IT_SOURCE(&huart7, UART_IT_IDLE))
   {
-		Tx2_Func.Jetson_Tx2_Handler(&huart7);
+		Orin_Func.Jetson_Orin_Handler(&huart7);
     __HAL_UART_CLEAR_IDLEFLAG(&huart7);
   }
   /* USER CODE END UART7_IRQn 0 */

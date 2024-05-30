@@ -2028,9 +2028,9 @@
               <FilePath>..\Devices\Devices.c\Buzzer.c</FilePath>
             </File>
             <File>
-              <FileName>Jetson_Tx2.c</FileName>
+              <FileName>Jetson_Orin.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Devices\Devices.c\Jetson_Tx2.c</FilePath>
+              <FilePath>..\Devices\Devices.c\Jetson_Orin.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -103,8 +103,8 @@ void Chassis_Processing(Chassis_t *Chassis)
 		case (Auto_Navigation):
 		{
 			// The gimbal coordinate is converted to chassis coordinate through trigonometry
-			Chassis->Gimbal_Coord.Vx = 0.5f * Tx2_Data.Receiving.Navigation.Y_Vel;
-			Chassis->Gimbal_Coord.Vy = 0.5f * Tx2_Data.Receiving.Navigation.X_Vel;
+			Chassis->Gimbal_Coord.Vx = 0.5f * Receive_From_Orin.Navigation.Y_Vel;
+			Chassis->Gimbal_Coord.Vy = 0.5f * Receive_From_Orin.Navigation.X_Vel;
 			Chassis->Chassis_Coord.Vx = Chassis->Gimbal_Coord.Vx * cos(Gimbal.Angle_Difference) - Chassis->Gimbal_Coord.Vy * sin(Gimbal.Angle_Difference);
 			Chassis->Chassis_Coord.Vy = Chassis->Gimbal_Coord.Vx * sin(Gimbal.Angle_Difference) + Chassis->Gimbal_Coord.Vy * cos(Gimbal.Angle_Difference);
 

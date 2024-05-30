@@ -39,7 +39,7 @@
 #include "Fusion.h"
 #include "Referee_System.h"
 #include "Buzzer.h"
-#include "Jetson_Tx2.h"
+#include "Jetson_Orin.h"
 #include "Odometry.h"
 /* USER CODE END Includes */
 
@@ -239,7 +239,7 @@ void General_Init(void const * argument)
 	FusionAhrsInitialise(&MPU6050_IMU_AHRS);
 	FusionAhrsInitialise(&Board_A_IMU_AHRS);
 	DR16_Func.DR16_USART_Receive_DMA(&huart1);
-	Tx2_Func.Jetson_Tx2_USART_Receive_DMA(&huart7);
+	Orin_Func.Jetson_Orin_USART_Receive_DMA(&huart7);
 	Referee_System_Func.Referee_UART_Receive_Interrupt(&huart6, Referee_System.Buffer, REFEREE_BUFFER_LEN);
 	Referee_System_Func.Referee_Set_Robot_State();
   CAN_Func.CAN_IT_Init(&hcan1, CAN1_Type);
@@ -368,7 +368,7 @@ void Mini_PC_Send(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-		Tx2_Func.Jetson_Tx2_Send_Data(&huart7);
+		Orin_Func.Jetson_Orin_Send_Data(&huart7);
 		vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
   }
   /* USER CODE END Mini_PC_Send */

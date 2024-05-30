@@ -17,7 +17,7 @@
 #include "Gimbal_Control.h"
 #include "Robot_Control.h"
 #include "Super_Capacitor.h"
-#include "Jetson_Tx2.h"
+#include "Jetson_Orin.h"
 
 #define MOTOR_SPEED_MAX 3000		   // 6880(theoretical max speed) //This is where to change the maximum speed
 #define MOTOR_GEAR_RATIO 19			   // Gear ratio of m3508 planetary gear
