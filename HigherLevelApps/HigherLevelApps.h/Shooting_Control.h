@@ -18,13 +18,13 @@
 #include "Ramp_Calc.h"
 #include "Referee_System.h"
 
-#define FRIC_SPEED_SLOW 8200//7000
-#define FRIC_SPEED_16 5000		//5300		  			// Tested value for 16m/s
-#define FRIC_SPEED_28 8200 //6000		  // Tested value for 28m/s
+#define FRIC_SPEED_30 7400 		  // Tested value for 28m/s
 #define LEFT_TRIGGER_DIRECTION 1  // Trigger motor direction
 #define RIGHT_TRIGGER_DIRECTION 1 // Trigger motor direction
 #define FRIC_LEFT_DIRECTION -1	  // Left friction wheel motor direction
 #define FRIC_RIGHT_DIRECTION 1	  // Right friction wheel motor direction
+#define LAUNCH_FREQUENCY (8)
+#define LAUNCH_PERIOD (1000.0f/LAUNCH_FREQUENCY)
 
 #define Shooting_Func_GroundInit  \
 	{                             \
@@ -59,6 +59,16 @@ typedef struct
 	{
 		uint8_t Turned_On;
 	} Fric_Wheel;
+	
+	struct
+	{
+		uint16_t Heat_Count;
+		int16_t Calculated_Heat_Left;
+		int16_t Calculated_Heat_Right;
+		uint16_t Launch_Freq_Left_Count;
+		uint16_t Launch_Freq_Right_Count;
+	}Heat_Regulation;
+	
 	int16_t Left_Click_Counter;
 	int16_t Right_Click_Counter;
 	uint8_t Fric_Wheel_Ready_Flag;

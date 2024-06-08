@@ -69,6 +69,7 @@ typedef struct
 		{
 			float Yaw;
 			float Pitch;
+			uint8_t Fire_Flag; //1 for fire, 0 for not fire
 		}Auto_Aiming;
 
 		struct __attribute__ ((__packed__))

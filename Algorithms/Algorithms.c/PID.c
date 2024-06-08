@@ -53,7 +53,8 @@ PID_t Pitch_Angle_PID = Pitch_Angle_PIDInit;
 PID_t Pitch_Speed_PID = Pitch_Speed_PIDInit;
 #undef Pitch_Speed_PIDInit
 
-PID_t Trigger_Angle_PID = Trigger_Angle_PIDInit;
+PID_t Trigger_Angle_Left_PID = Trigger_Angle_PIDInit;
+PID_t Trigger_Angle_Right_PID = Trigger_Angle_PIDInit;
 #undef Trigger_Angle_PIDInit
 
 PID_t Trigger_Speed_PID = Trigger_Speed_PIDInit;

@@ -37,6 +37,12 @@ typedef struct
 		Disabled,
 	} Mode;
 
+	enum
+	{
+		Nav_and_Auto,
+		Spin_and_Auto,
+		No_Auto,
+	}Auto_Mode;
 	uint8_t Initialized_Flag;
 } Robot_Mode_t;
 

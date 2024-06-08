@@ -23,6 +23,8 @@ Robot_Mode_t Robot_Mode;
 void Robot_Control_Start(void)
 {
 	State_Machine_Func.Remote_Control_Update();
+	
+	Referee_System_Func.Referee_Set_Robot_State();
 
 	Chassis_Func.Chassis_Speed_Get_Data(&Chassis);
 	Chassis_Func.Chassis_Processing(&Chassis);

@@ -24,7 +24,7 @@ void Remote_Control_Update(void)
 	Both switches down for disabling the robot
 	Also disable the robot if remote control receives no data
 	*/
-	if ((DR16_Export_Data.Remote_Control.Left_Switch == SWITCH_DOWN && DR16_Export_Data.Remote_Control.Right_Switch == SWITCH_DOWN) || (DR16_Export_Data.Info_Update_Frame < 1))
+	if ((DR16_Export_Data.Remote_Control.Right_Switch == SWITCH_DOWN) || (DR16_Export_Data.Info_Update_Frame < 1))
 	{
 		Robot_Control_Func.Robot_Control_Disabled();
 		//State_Machine.Robot_Ready_Flag = false;
@@ -41,43 +41,31 @@ void Remote_Control_Update(void)
 
 		switch (DR16_Export_Data.Remote_Control.Left_Switch)
 		{
-		case (SWITCH_DOWN):
-		{
-			Chassis.Current_Mode = Follow_Gimbal;
-			Gimbal.Current_Mode = Follow_Gimbal;
-
-			break;
-		}
-		case (SWITCH_MID):
-		{
-			// Do not set auto-aim or nav mode manually, already switches to correct mode based on UART package
-			// Chassis.Current_Mode = Auto_Aiming;
-			// Gimbal.Current_Mode = Auto_Aiming;
-
-			break;
-		}
-		case (SWITCH_UP):
-		{
-			// Do not set auto-aim or nav mode manually, already switches to correct mode based on UART package
-			// Chassis.Current_Mode = Auto_Navigation;//Spin_Top;
-			// Gimbal.Current_Mode = Auto_Navigation;
-
-			//Chassis.Current_Mode = Follow_Gimbal;
-			//Gimbal.Current_Mode = Follow_Gimbal;
-
-			break;
-		}
-		}
-
-		if (!Shooting.Fric_Wheel.Turned_On)
-		{
-			if (DR16_Export_Data.Remote_Control.Dial_Wheel < -50)
+			case (SWITCH_DOWN):
 			{
-				Super_Capacitor.Super_Cap_On = 1;
-				Super_Capacitor.Super_Cap_Accel_Rate = fabs((float)DR16_Export_Data.Remote_Control.Dial_Wheel / 1000);
+				Chassis.Current_Mode = Follow_Gimbal;
+				Gimbal.Current_Mode = Follow_Gimbal;
+				Robot_Mode.Auto_Mode = No_Auto;
+
+				break;
 			}
-			else
-				Super_Capacitor.Super_Cap_On = 0;
+			case (SWITCH_MID):
+			{
+				// Do not set auto-aim or nav mode manually, already switches to correct mode based on UART package
+				Robot_Mode.Auto_Mode = Nav_and_Auto;
+
+				break;
+			}
+			case (SWITCH_UP):
+			{
+				// Do not set auto-aim or nav mode manually, already switches to correct mode based on UART package
+				// Chassis.Current_Mode = Auto_Navigation;//Spin_Top;
+				// Gimbal.Current_Mode = Auto_Navigation;
+
+				Robot_Mode.Auto_Mode = Spin_and_Auto;
+
+				break;
+			}
 		}
 	}
 

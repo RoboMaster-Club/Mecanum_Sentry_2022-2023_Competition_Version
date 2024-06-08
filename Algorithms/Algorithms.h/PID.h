@@ -283,7 +283,7 @@ typedef struct
 			0,                \
 			4.0f,             \
 			0,                \
-			50.0f,            \
+			70.0f,            \
 			0,                \
 			0,                \
 			0,                \
@@ -394,7 +394,8 @@ extern PID_t Yaw_Angle_Start_PID;
 extern PID_t Yaw_Speed_Start_PID;
 extern PID_t Pitch_Angle_PID;
 extern PID_t Pitch_Speed_PID;
-extern PID_t Trigger_Angle_PID;
+extern PID_t Trigger_Angle_Left_PID;
+extern PID_t Trigger_Angle_Right_PID;
 extern PID_t Trigger_Speed_PID;
 extern PID_t AutoAim_Pitch_Angle_PID;
 extern PID_t AutoAim_Pitch_Speed_PID;
