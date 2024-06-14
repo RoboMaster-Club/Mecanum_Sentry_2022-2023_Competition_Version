@@ -63,8 +63,8 @@ void Remote_Control_Update(void)
 				// Gimbal.Current_Mode = Auto_Navigation;
 
 				Robot_Mode.Auto_Mode = Spin_and_Auto;
-				Chassis.Current_Mode = Spin_Top;
-				Gimbal.Current_Mode = Spin_Top;
+//				Chassis.Current_Mode = Spin_Top;
+//				Gimbal.Current_Mode = Spin_Top;
 
 				break;
 			}

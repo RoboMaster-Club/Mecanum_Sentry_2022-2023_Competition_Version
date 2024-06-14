@@ -38,7 +38,7 @@ void Jetson_Orin_Get_Data(void)
 				// Sentry will send either an auto-aim or nav package, we will set the mode depending on the package
 				if (Chassis.Current_Mode != Auto_Aiming || Gimbal.Current_Mode != Auto_Aiming)
 				{
-					Chassis.Current_Mode = Auto_Aiming;
+					Chassis.Current_Mode = Spin_Top;
 					Gimbal.Current_Mode = Auto_Aiming;
 				}
 			
@@ -78,6 +78,7 @@ void Jetson_Orin_Send_Data(UART_HandleTypeDef *huart)
 	Send_To_Orin.Velocity_X = RBG_Pose.Velocity_X / 1000.0f;
 	Send_To_Orin.Velocity_Y = RBG_Pose.Velocity_Y / 1000.0f;
 	Send_To_Orin.Current_HP = Referee_Robot_State.Current_HP;
+
 	Send_To_Orin.Game_Start_Flag = (Referee_System.Game_Status.Progress == 4) ? 1 : 0; //4 for match begin
 	Send_To_Orin.Enemy_Color_Flag = (Referee_System.Robot_State.ID > 11) ? 1 : 0; //ID > 11 means myself is blue, which means enemy is red
 	Send_To_Orin.Supplier_Zone_Flag = (Referee_System.RFID.State & (1 << SUPPLIER_ZONE_SHIFT)) >> SUPPLIER_ZONE_SHIFT; //1 for Supplier Zone RFID detected
