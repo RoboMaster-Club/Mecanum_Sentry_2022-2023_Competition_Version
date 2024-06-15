@@ -150,7 +150,7 @@ void Shooting_Processing(Shooting_t *Shooting)
 				if (Shooting->Heat_Regulation.Launch_Freq_Left_Count*2 > LAUNCH_PERIOD)
 					{
 							Shooting->Heat_Regulation.Launch_Freq_Left_Count = 0;
-							if((Referee_Robot_State.Heat_Max - Shooting->Heat_Regulation.Calculated_Heat_Left) > 10)
+							if((Referee_Robot_State.Heat_Max - Shooting->Heat_Regulation.Calculated_Heat_Left) > 15)
 							{
 									Shooting->Heat_Regulation.Calculated_Heat_Left += 10;
 									Shooting->Trigger.Left_Target_Angle += LEFT_TRIGGER_DIRECTION*M2006_ANGLE_1_BULLET;
@@ -166,7 +166,7 @@ void Shooting_Processing(Shooting_t *Shooting)
 				if (Shooting->Heat_Regulation.Launch_Freq_Right_Count*2 > LAUNCH_PERIOD)
 					{
 							Shooting->Heat_Regulation.Launch_Freq_Right_Count = 0;
-							if((Referee_Robot_State.Heat_Max - Shooting->Heat_Regulation.Calculated_Heat_Right) > 10)
+							if((Referee_Robot_State.Heat_Max - Shooting->Heat_Regulation.Calculated_Heat_Right) > 15)
 							{
 									Shooting->Heat_Regulation.Calculated_Heat_Right += 10;
 									Shooting->Trigger.Right_Target_Angle += RIGHT_TRIGGER_DIRECTION*M2006_ANGLE_1_BULLET;

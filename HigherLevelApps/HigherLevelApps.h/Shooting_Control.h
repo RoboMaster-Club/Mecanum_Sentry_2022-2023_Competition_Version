@@ -18,12 +18,12 @@
 #include "Ramp_Calc.h"
 #include "Referee_System.h"
 
-#define FRIC_SPEED_30 7400 		  // Tested value for 28m/s
+#define FRIC_SPEED_30 7200 		  // Tested value for 28m/s
 #define LEFT_TRIGGER_DIRECTION 1  // Trigger motor direction
 #define RIGHT_TRIGGER_DIRECTION 1 // Trigger motor direction
 #define FRIC_LEFT_DIRECTION -1	  // Left friction wheel motor direction
 #define FRIC_RIGHT_DIRECTION 1	  // Right friction wheel motor direction
-#define LAUNCH_FREQUENCY (8)
+#define LAUNCH_FREQUENCY (16)
 #define LAUNCH_PERIOD (1000.0f/LAUNCH_FREQUENCY)
 
 #define Shooting_Func_GroundInit  \

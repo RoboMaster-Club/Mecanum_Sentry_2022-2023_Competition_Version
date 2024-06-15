@@ -38,8 +38,8 @@ void Jetson_Orin_Get_Data(void)
 				// Sentry will send either an auto-aim or nav package, we will set the mode depending on the package
 				if (Chassis.Current_Mode != Auto_Aiming || Gimbal.Current_Mode != Auto_Aiming)
 				{
-					Chassis.Current_Mode = Spin_Top;
-					Gimbal.Current_Mode = Auto_Aiming;
+					Chassis.Current_Mode = Auto_Aiming;
+					Gimbal.Current_Mode = Spin_Top;
 				}
 			
 				memcpy(&Receive_From_Orin.Auto_Aiming,&Orin_Rx_Buffer[4],sizeof(Receive_From_Orin.Auto_Aiming));
@@ -50,7 +50,7 @@ void Jetson_Orin_Get_Data(void)
 				if (Chassis.Current_Mode != Auto_Navigation || Gimbal.Current_Mode != Auto_Navigation)
 				{
 					Chassis.Current_Mode = Auto_Navigation;
-					Gimbal.Current_Mode = Auto_Navigation;
+					Gimbal.Current_Mode = Spin_Top;
 				}
 			
 				memcpy(&Receive_From_Orin.Navigation,&Orin_Rx_Buffer[4],sizeof(Receive_From_Orin.Navigation));

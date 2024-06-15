@@ -24,7 +24,7 @@
 #define CHASSIS_WIDTH_HALF 0.15f	   // Measured value of the chassis's half width
 #define CHASSIS_LENGTH_HALF 0.18f	   // Measured value of the chassis's half length
 #define CHASSIS_NORMAL_SPEED_COEFF 200 // Normal speed coeff
-#define CHASSIS_SPINTOP_RATE 2		   // Chassis spintop rate
+#define CHASSIS_SPINTOP_RATE (3.5f)		   // Chassis spintop rate
 
 #define Chassis_Func_GroundInit      \
 	{                                \
