@@ -23,6 +23,7 @@ Orin_Func_t Orin_Func = Orin_Func_GroundInit;
 Send_To_Orin_t Send_To_Orin;
 Receive_From_Orin_t Receive_From_Orin;
 uint8_t Orin_Rx_Buffer[20];
+uint16_t Counter;
 
 #undef Orin_Func_GroundInit
 
@@ -38,8 +39,8 @@ void Jetson_Orin_Get_Data(void)
 				// Sentry will send either an auto-aim or nav package, we will set the mode depending on the package
 				if (Chassis.Current_Mode != Auto_Aiming || Gimbal.Current_Mode != Auto_Aiming)
 				{
-					Chassis.Current_Mode = Auto_Aiming;
-					Gimbal.Current_Mode = Spin_Top;
+					Chassis.Current_Mode = Spin_Top;
+					Gimbal.Current_Mode = Auto_Aiming;
 				}
 			
 				memcpy(&Receive_From_Orin.Auto_Aiming,&Orin_Rx_Buffer[4],sizeof(Receive_From_Orin.Auto_Aiming));
@@ -50,7 +51,7 @@ void Jetson_Orin_Get_Data(void)
 				if (Chassis.Current_Mode != Auto_Navigation || Gimbal.Current_Mode != Auto_Navigation)
 				{
 					Chassis.Current_Mode = Auto_Navigation;
-					Gimbal.Current_Mode = Spin_Top;
+					Gimbal.Current_Mode = Auto_Navigation;
 				}
 			
 				memcpy(&Receive_From_Orin.Navigation,&Orin_Rx_Buffer[4],sizeof(Receive_From_Orin.Navigation));
@@ -74,12 +75,14 @@ void Jetson_Orin_Send_Data(UART_HandleTypeDef *huart)
 	Send_To_Orin.Yaw_Angular_Rate = Board_A_IMU.Export_Data.Gyro_Yaw / 180.0f * PI;
 	Send_To_Orin.Position_X = RBG_Pose.Position_X / 1000.0f;
 	Send_To_Orin.Position_Y = RBG_Pose.Position_Y / 1000.0f;
-	Send_To_Orin.Orientation = RBG_Pose.Orientation;
+	Send_To_Orin.Orientation = RBG_Pose.Orientation;	////Board_A_IMU.Export_Data.Total_Yaw / 180.0f * PI;
 	Send_To_Orin.Velocity_X = RBG_Pose.Velocity_X / 1000.0f;
 	Send_To_Orin.Velocity_Y = RBG_Pose.Velocity_Y / 1000.0f;
 	Send_To_Orin.Current_HP = Referee_Robot_State.Current_HP;
 
-	Send_To_Orin.Game_Start_Flag = (Referee_System.Game_Status.Progress == 4) ? 1 : 0; //4 for match begin
+//	if(Receive_From_Orin.Frame_Header == 0xAA)
+//		Send_To_Orin.Game_Start_Flag = 1;
+	//Send_To_Orin.Game_Start_Flag = (Referee_System.Game_Status.Progress == 4) ? 1 : 0; //4 for match begin
 	Send_To_Orin.Enemy_Color_Flag = (Referee_System.Robot_State.ID > 11) ? 1 : 0; //ID > 11 means myself is blue, which means enemy is red
 	Send_To_Orin.Supplier_Zone_Flag = (Referee_System.RFID.State & (1 << SUPPLIER_ZONE_SHIFT)) >> SUPPLIER_ZONE_SHIFT; //1 for Supplier Zone RFID detected
 	Send_To_Orin.Central_Buff_Zone_Flag = (Referee_System.RFID.State & (1 << CENTRAL_BUFF_ZONE_SHIFT)) >> CENTRAL_BUFF_ZONE_SHIFT; //1 for Central Buff Zone Zone RFID detected

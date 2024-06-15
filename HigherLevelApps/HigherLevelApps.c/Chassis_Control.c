@@ -111,7 +111,12 @@ void Chassis_Processing(Chassis_t *Chassis)
 
 			Chassis->Chassis_Coord.Wz = Chassis->Chassis_Coord.Wz * 0.8f - 0.2f * PID_Func.Positional_PID_Min_Error(&Chassis_Small_Angle_PID,
 																													(fmod(Gimbal.Target_Yaw - RBG_Pose.Orientation_Degree, 360.0f) > 180.0f) ? fmod(Gimbal.Target_Yaw - RBG_Pose.Orientation_Degree, 360.0f) - 360.f : fmod(Gimbal.Target_Yaw - RBG_Pose.Orientation_Degree, 360.0f), 0, 0.0f);
-
+//			
+//			Chassis->Gimbal_Coord.Vx = 0.5f * Receive_From_Orin.Navigation.Y_Vel;
+//			Chassis->Gimbal_Coord.Vy = 0.5f * Receive_From_Orin.Navigation.X_Vel;
+//			Chassis->Chassis_Coord.Vx = Chassis->Gimbal_Coord.Vx * cos(Gimbal.Angle_Difference) - Chassis->Gimbal_Coord.Vy * sin(Gimbal.Angle_Difference);
+//			Chassis->Chassis_Coord.Vy = Chassis->Gimbal_Coord.Vx * sin(Gimbal.Angle_Difference) + Chassis->Gimbal_Coord.Vy * cos(Gimbal.Angle_Difference);
+//			Chassis->Chassis_Coord.Wz = CHASSIS_SPINTOP_RATE; // This is where you control how fast the spintop spins
 			break;
 		}
 		

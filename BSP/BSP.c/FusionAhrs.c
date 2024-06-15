@@ -36,7 +36,7 @@
 void FusionAhrsInitialise(FusionAhrs *const ahrs)
 {
     const FusionAhrsSettings settings = {
-        .gain = 5.0f,
+        .gain = 1.5f,
         .accelerationRejection = 180.0f,
         .magneticRejection = 180.0f,
         .rejectionTimeout = 0,
