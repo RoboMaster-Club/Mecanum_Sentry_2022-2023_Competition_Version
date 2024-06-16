@@ -61,7 +61,7 @@ void Remote_Control_Update(void)
 				// Do not set auto-aim or nav mode manually, already switches to correct mode based on UART package
 				// Chassis.Current_Mode = Auto_Navigation;//Spin_Top;
 				// Gimbal.Current_Mode = Auto_Navigation;
-
+				
 				Chassis.Current_Mode = Spin_Top;
 				Gimbal.Current_Mode = Spin_Top;
 
@@ -82,23 +82,20 @@ void Remote_Control_Update(void)
 		case (SWITCH_DOWN):
 		{
 			State_Machine.Control_Source = Remote_Control;
-
 			Shooting.Fric_Wheel.Turned_On = 0;
-			Shooting.Type.Auto_Aiming = 0;
-
 			break;
 		}
 		case (SWITCH_MID):
 		{
 			State_Machine.Control_Source = Remote_Control;
-			Shooting.Type.Auto_Aiming = 0;
 			Shooting.Fric_Wheel.Turned_On = 1;
 
 			break;
 		}
 		case (SWITCH_UP):
 		{
-			State_Machine.Control_Source = Computer;
+			State_Machine.Control_Source = Remote_Control;
+			//State_Machine.Control_Source = Computer;
 			//Shooting.Type.Auto_Aiming = 1;
 
 			break;

@@ -41,6 +41,7 @@
 #include "Buzzer.h"
 #include "Jetson_Orin.h"
 #include "Odometry.h"
+#include "Serial.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -70,6 +71,7 @@ osThreadId Task_CAN1_RecHandle;
 osThreadId Task_CAN2_RecHandle;
 osThreadId Task_Robot_CtrlHandle;
 osThreadId Task_Mini_PCHandle;
+osThreadId Task_DebugHandle;
 osMessageQId CAN1_ReceiveHandle;
 osMessageQId CAN2_ReceiveHandle;
 osMessageQId CAN_SendHandle;
@@ -86,6 +88,7 @@ void CAN1_Rec(void const * argument);
 void CAN2_Rec(void const * argument);
 void Robot_Control(void const * argument);
 void Mini_PC_Send(void const * argument);
+void Debug_Send(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -172,6 +175,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of Task_Mini_PC */
   osThreadDef(Task_Mini_PC, Mini_PC_Send, osPriorityHigh, 0, 128);
   Task_Mini_PCHandle = osThreadCreate(osThread(Task_Mini_PC), NULL);
+
+  /* definition and creation of Task_Debug */
+  osThreadDef(Task_Debug, Debug_Send, osPriorityNormal, 0, 128);
+  Task_DebugHandle = osThreadCreate(osThread(Task_Debug), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   osThreadDef(Task_Odometry, Odometry, osPriorityAboveNormal, 0, 640);
@@ -372,6 +379,28 @@ void Mini_PC_Send(void const * argument)
 		vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
   }
   /* USER CODE END Mini_PC_Send */
+}
+
+/* USER CODE BEGIN Header_Debug_Send */
+/**
+* @brief Function implementing the Task_Debug thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Debug_Send */
+void Debug_Send(void const * argument)
+{
+  /* USER CODE BEGIN Debug_Send */
+	portTickType xLastWakeTime;
+  xLastWakeTime = xTaskGetTickCount();
+  const TickType_t TimeIncrement = pdMS_TO_TICKS(100);
+  /* Infinite loop */
+  for(;;)
+  {
+    printf("/*%f,%f,%f*/\n",Receive_From_Orin.Navigation.X_Vel, Receive_From_Orin.Navigation.Yaw_Angular_Rate,Board_A_IMU.Export_Data.Total_Yaw);
+		vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
+  }
+  /* USER CODE END Debug_Send */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -274,7 +274,25 @@ typedef struct
 			4000.0f,        \
 	}
 
-#define Trigger_Angle_PIDInit \
+#define Trigger_Angle_Left_PIDInit \
+	{                         \
+		0,                    \
+			0,                \
+			0,                \
+			0,                \
+			0,                \
+			4.0f,             \
+			0,                \
+			70.0f,            \
+			0,                \
+			0,                \
+			0,                \
+			0,                \
+			6000.0f,          \
+			0,                \
+	}
+	
+#define Trigger_Angle_Right_PIDInit \
 	{                         \
 		0,                    \
 			0,                \
