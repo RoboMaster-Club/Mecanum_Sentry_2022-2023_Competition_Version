@@ -61,11 +61,15 @@ void Gimbal_Processing(Gimbal_t *Gimbal)
 			// soft update
 			Gimbal->Target_Yaw_Speed = PID_Func.Positional_PID(&Yaw_Angle_Follow_PID, Gimbal->Target_Yaw, Gimbal->Current_Yaw);
 			GM6020_Yaw.Output_Current = PID_Func.Positional_PID(&Yaw_Speed_Follow_PID, Gimbal->Target_Yaw_Speed, Gimbal->Current_Yaw_Speed);
+			if(abs(GM6020_Yaw.Output_Current) < 2000)
+				GM6020_Yaw.Output_Current = 0;
 			
 			Gimbal->Current_Pitch = PITCH_DIRECTION * Board_A_IMU.Export_Data.Pitch;
 			Gimbal->Pitch_Angle_Output = PID_Func.Positional_PID(&Pitch_Angle_PID, Gimbal->Target_Pitch, -Gimbal->Current_Pitch);
 			GM6020_Pitch.Output_Current = PID_Func.Positional_PID(&AutoAim_Pitch_Speed_PID, Gimbal->Pitch_Angle_Output, -Board_A_IMU.Export_Data.Gyro_Pitch);
-
+			if(abs(GM6020_Pitch.Output_Current) < 2000)
+				GM6020_Pitch.Output_Current = 0;
+			
 			Gimbal->Prev_Mode = Follow_Gimbal;
 
 			break;

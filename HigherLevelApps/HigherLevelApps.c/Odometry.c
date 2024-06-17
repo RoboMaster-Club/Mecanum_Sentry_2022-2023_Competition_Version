@@ -1,7 +1,8 @@
 #include "Odometry.h"
 #include "M3508_Motor.h"
 #include "main.h"
-
+#include "GM6020_Motor.h"
+#include "Board_A_IMU.h"
 #include <math.h>
 
 Pose RBG_Pose;
@@ -46,9 +47,12 @@ void Update_Robot_Pose()
 
     Pose_Incr.Position_X = (Increment.Front_Left + Increment.Front_Right + Increment.Rear_Right + Increment.Rear_Left) / 4;
     Pose_Incr.Position_Y = (-Increment.Front_Left + Increment.Front_Right - Increment.Rear_Right + Increment.Rear_Left) / 4;
-
+		// offset 2660
+		// positive:ccw
+		// imu yaw positive:ccw
     RBG_Pose.Orientation = RBG_Init_ORIENTATION +
                            ((-Current.Front_Left + Current.Front_Right + Current.Rear_Right - Current.Rear_Left) / (4 * (CHASSIS_HALF_WIDTH + CHASSIS_HALF_LENGTH))) * 0.3f + 0.7f * RBG_Pose.Orientation;
+		float chassis_orientation = Board_A_IMU.Export_Data.Yaw / 180.0f * PI - (GM6020_Yaw.Actual_Angle - 2660.0f) / 8192.0f * PI * 2;
 		
 		RBG_Pose.Prev_Time = RBG_Pose.Current_Time;
 		RBG_Pose.Current_Time = HAL_GetTick();
@@ -58,8 +62,8 @@ void Update_Robot_Pose()
 		RBG_Pose.Prev_Position_Y	= RBG_Pose.Position_Y;
 		RBG_Pose.Prev_Orientation_Degree = RBG_Pose.Orientation_Degree;
     RBG_Pose.Orientation_Degree = RBG_Pose.Orientation / PI * 180;
-    RBG_Pose.Position_X += Pose_Incr.Position_X * cos(RBG_Pose.Orientation) - Pose_Incr.Position_Y * sin(RBG_Pose.Orientation);
-    RBG_Pose.Position_Y += Pose_Incr.Position_X * sin(RBG_Pose.Orientation) + Pose_Incr.Position_Y * cos(RBG_Pose.Orientation);
+    RBG_Pose.Position_X += Pose_Incr.Position_X * cos(chassis_orientation) - Pose_Incr.Position_Y * sin(chassis_orientation);
+    RBG_Pose.Position_Y += Pose_Incr.Position_X * sin(chassis_orientation) + Pose_Incr.Position_Y * cos(chassis_orientation);
 		
 		RBG_Pose.Velocity_X = (RBG_Pose.Position_X - RBG_Pose.Prev_Position_X)/RBG_Pose.Period;
 		RBG_Pose.Velocity_Y = (RBG_Pose.Position_Y - RBG_Pose.Prev_Position_Y)/RBG_Pose.Period;

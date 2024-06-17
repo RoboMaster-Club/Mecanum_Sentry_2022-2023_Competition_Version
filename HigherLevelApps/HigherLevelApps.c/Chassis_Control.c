@@ -64,8 +64,8 @@ void Inverse_Kinematic_Calc(Chassis_t *Chassis)
 		M3508_Chassis[i].Target_Speed = Chassis->Wheel_Speed[i];
 		M3508_Chassis[i].Output_Current = PID_Func.Positional_PID(&Chassis_Speed_PID, M3508_Chassis[i].Target_Speed, M3508_Chassis[i].Actual_Speed);
 		M3508_Chassis[i].Output_Current = VAL_LIMIT(M3508_Chassis[i].Output_Current, M3508_OUTPUT_MAX, (-M3508_OUTPUT_MAX));
-		if(abs(M3508_Chassis[i].Output_Current) < 3000)
-		 	M3508_Chassis[i].Output_Current = 0;
+//		if(abs(M3508_Chassis[i].Output_Current) < 3000)
+//		 	M3508_Chassis[i].Output_Current = 0;
 	}
 }
 
@@ -86,7 +86,7 @@ void Chassis_Processing(Chassis_t *Chassis)
 			Chassis->Chassis_Coord.Vx = Chassis->Gimbal_Coord.Vx * cos(Gimbal.Angle_Difference) - Chassis->Gimbal_Coord.Vy * sin(Gimbal.Angle_Difference);
 			Chassis->Chassis_Coord.Vy = Chassis->Gimbal_Coord.Vx * sin(Gimbal.Angle_Difference) + Chassis->Gimbal_Coord.Vy * cos(Gimbal.Angle_Difference);
 
-			Chassis->Chassis_Coord.Wz = Chassis->Chassis_Coord.Wz * 0.8f - 0.2f * PID_Func.Positional_PID_Min_Error(&Chassis_Small_Angle_PID,
+			Chassis->Chassis_Coord.Wz = -PID_Func.Positional_PID_Min_Error(&Chassis_Small_Angle_PID,
 																													(fmod(Gimbal.Target_Yaw - RBG_Pose.Orientation_Degree, 360.0f) > 180.0f) ? fmod(Gimbal.Target_Yaw - RBG_Pose.Orientation_Degree, 360.0f) - 360.f : fmod(Gimbal.Target_Yaw - RBG_Pose.Orientation_Degree, 360.0f), 0, 0.0f);
 			break;
 		}
