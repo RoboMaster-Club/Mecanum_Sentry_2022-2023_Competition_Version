@@ -24,10 +24,10 @@ void Remote_Control_Update(void)
 	Both switches down for disabling the robot
 	Also disable the robot if remote control receives no data
 	*/
-	if ((DR16_Export_Data.Remote_Control.Left_Switch == SWITCH_DOWN && DR16_Export_Data.Remote_Control.Right_Switch == SWITCH_DOWN) || (DR16_Export_Data.Info_Update_Frame < 1))
+	if ((DR16_Export_Data.Remote_Control.Right_Switch == SWITCH_DOWN) || (DR16_Export_Data.Info_Update_Frame < 1))
 	{
 		Robot_Control_Func.Robot_Control_Disabled();
-		State_Machine.Robot_Ready_Flag = false;
+		//State_Machine.Robot_Ready_Flag = false;
 	}
 
 	/*
@@ -41,38 +41,32 @@ void Remote_Control_Update(void)
 
 		switch (DR16_Export_Data.Remote_Control.Left_Switch)
 		{
-		case (SWITCH_DOWN):
-		{
-			Chassis.Current_Mode = Follow_Gimbal;
-			Gimbal.Current_Mode = Follow_Gimbal;
-
-			break;
-		}
-		case (SWITCH_MID):
-		{
-			Chassis.Current_Mode = Not_Follow_Gimbal;
-			Gimbal.Current_Mode = Not_Follow_Gimbal;
-
-			break;
-		}
-		case (SWITCH_UP):
-		{
-			Chassis.Current_Mode = Spin_Top;
-			Gimbal.Current_Mode = Spin_Top;
-
-			break;
-		}
-		}
-
-		if (!Shooting.Fric_Wheel.Turned_On)
-		{
-			if (DR16_Export_Data.Remote_Control.Dial_Wheel < -50)
+			case (SWITCH_DOWN):
 			{
-				Super_Capacitor.Super_Cap_On = 1;
-				Super_Capacitor.Super_Cap_Accel_Rate = fabs((float)DR16_Export_Data.Remote_Control.Dial_Wheel / 1000);
+				Chassis.Current_Mode = Follow_Gimbal;
+				Gimbal.Current_Mode = Follow_Gimbal;
+				Robot_Mode.Auto_Mode = No_Auto;
+
+				break;
 			}
-			else
-				Super_Capacitor.Super_Cap_On = 0;
+			case (SWITCH_MID):
+			{
+				// Do not set auto-aim or nav mode manually, already switches to correct mode based on UART package
+				Robot_Mode.Auto_Mode = Nav_and_Auto;
+
+				break;
+			}
+			case (SWITCH_UP):
+			{
+				// Do not set auto-aim or nav mode manually, already switches to correct mode based on UART package
+				// Chassis.Current_Mode = Auto_Navigation;//Spin_Top;
+				// Gimbal.Current_Mode = Auto_Navigation;
+				
+				Chassis.Current_Mode = Spin_Top;
+				Gimbal.Current_Mode = Spin_Top;
+
+				break;
+			}
 		}
 	}
 
@@ -88,24 +82,21 @@ void Remote_Control_Update(void)
 		case (SWITCH_DOWN):
 		{
 			State_Machine.Control_Source = Remote_Control;
-
 			Shooting.Fric_Wheel.Turned_On = 0;
-			Shooting.Type.Auto_Aiming = 0;
-
 			break;
 		}
 		case (SWITCH_MID):
 		{
 			State_Machine.Control_Source = Remote_Control;
-			Shooting.Type.Auto_Aiming = 0;
 			Shooting.Fric_Wheel.Turned_On = 1;
 
 			break;
 		}
 		case (SWITCH_UP):
 		{
-			// State_Machine.Control_Source = Computer;
-			Shooting.Type.Auto_Aiming = 1;
+			State_Machine.Control_Source = Remote_Control;
+			//State_Machine.Control_Source = Computer;
+			//Shooting.Type.Auto_Aiming = 1;
 
 			break;
 		}
@@ -144,7 +135,7 @@ void Computer_Update(void)
 			}
 		}
 
-		else if (DR16_Export_Data.Keyboard.Press_G.Switch_Flag)
+		/*else if (DR16_Export_Data.Keyboard.Press_G.Switch_Flag)
 		{
 			if (Chassis.Current_Mode == Spin_Top && Gimbal.Current_Mode == Spin_Top)
 			{
@@ -156,7 +147,7 @@ void Computer_Update(void)
 				Chassis.Current_Mode = Spin_Top;
 				Gimbal.Current_Mode = Spin_Top;
 			}
-		}
+		}*/
 
 		else if (DR16_Export_Data.Keyboard.Press_B.Switch_Flag)
 		{

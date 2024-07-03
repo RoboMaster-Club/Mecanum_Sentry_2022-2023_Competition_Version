@@ -17,14 +17,14 @@
 #include "Robot_Control.h"
 #include "Board_A_IMU.h"
 #include "MPU6050_IMU.h"
-#include "Jetson_Tx2.h"
+#include "Jetson_Orin.h"
 
 #define YAW_DIRECTION 1			  // Yaw motor direction
 #define YAW_MID_MECH_ANGLE 2691	  // This is measured for yaw origin
 #define PITCH_DIRECTION 1		  // Pitch motor direction
 #define PITCH_MID_MECH_ANGLE 5241 // This is measured for pitch origin
-#define PITCH_LOWER_LIMIT -23.0f  // Pitch cannot rotate 360 degree, so these are the limits in mechanical angle
-#define PITCH_UPPER_LIMIT 30.0f
+#define PITCH_LOWER_LIMIT -18.0f  // Pitch cannot rotate 360 degree, so these are the limits in mechanical angle
+#define PITCH_UPPER_LIMIT 18.0f
 
 #define Gimbal_Func_GroundInit        \
 	{                                 \
@@ -39,7 +39,6 @@ typedef struct
 	int Prev_Mode;
 
 	float Target_Yaw;		 // deg
-	float Lag_Target_Yaw;	 // deg
 	float Last_Yaw;			 // deg
 	float Current_Yaw;		 // deg
 	float Target_Yaw_Speed;	 // deg/s

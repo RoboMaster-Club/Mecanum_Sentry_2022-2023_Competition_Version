@@ -15,7 +15,7 @@
 #include "Gimbal_Control.h"
 #include "State_Machine.h"
 #include "Shooting_Control.h"
-#include "Jetson_Tx2.h"
+#include "Jetson_Orin.h"
 #include "Buzzer.h"
 
 #define Robot_Control_Func_GroundInit \
@@ -30,11 +30,19 @@ typedef struct
 	enum
 	{
 		Follow_Gimbal,
+		Auto_Aiming,
+		Auto_Navigation,
 		Not_Follow_Gimbal,
 		Spin_Top,
 		Disabled,
 	} Mode;
 
+	enum
+	{
+		Nav_and_Auto,
+		Spin_and_Auto,
+		No_Auto,
+	}Auto_Mode;
 	uint8_t Initialized_Flag;
 } Robot_Mode_t;
 

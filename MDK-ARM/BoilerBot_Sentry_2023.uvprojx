@@ -10,7 +10,7 @@
       <TargetName>BoilerBot_Sentry_2023</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5050041::V5.05 (build 41)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARM_Compiler_5.06u7</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -134,7 +134,7 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4101</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
@@ -2028,9 +2028,9 @@
               <FilePath>..\Devices\Devices.c\Buzzer.c</FilePath>
             </File>
             <File>
-              <FileName>Jetson_Tx2.c</FileName>
+              <FileName>Jetson_Orin.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Devices\Devices.c\Jetson_Tx2.c</FilePath>
+              <FilePath>..\Devices\Devices.c\Jetson_Orin.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -33,7 +33,16 @@ typedef struct
     float Position_Y;
     float Orientation;
     float Orientation_Degree;
-} Pose;
+		float Prev_Position_X;
+		float Prev_Position_Y;
+		float Prev_Orientation_Degree;
+		float Velocity_X;
+		float Velocity_Y;
+		float Velocity_Orientation;
+		float Prev_Time;
+    float Current_Time;
+		float Period;
+}	Pose;
 
 typedef struct
 {

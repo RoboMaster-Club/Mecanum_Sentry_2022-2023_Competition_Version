@@ -22,7 +22,7 @@
 //#define USE_MPU6050 1
 
 #define I2C_TIMEOUT 100 //Timeout of I2C communication
-#define CALIBRATION_SAMPLE 1000 //Number of samples to take
+#define CALIBRATION_SAMPLE 3000 //Number of samples to take
 
 //Register addresses
 #define DEV_ADDR 0x68

@@ -138,14 +138,14 @@ typedef struct
 			0,                   \
 			0,                   \
 			0,                   \
-			10.0f,               \
+			0.6f,               \
 			0,                   \
-			3000.0f,             \
-			0,                   \
-			0,                   \
+			400.0f,              \
 			0,                   \
 			0,                   \
-			999999.0f,           \
+			0,                   \
+			0,                   \
+			10000.0f,           \
 			0,                   \
 	}
 
@@ -156,9 +156,9 @@ typedef struct
 			0,                   \
 			0,                   \
 			0,                   \
-			160.0f,              \
+			300.0f,              \
 			0,                   \
-			500.0f,              \
+			0,              			\
 			0,                   \
 			0,                   \
 			0,                   \
@@ -245,14 +245,14 @@ typedef struct
 			0,              \
 			0,              \
 			0,              \
-			1.5f,           \
-			0,              \
-			30.0f,          \
-			0,              \
-			0,              \
+			18.0f,           \
+			120.0f,              \
+			0,          \
 			0,              \
 			0,              \
-			30.0f,          \
+			0,              \
+			0,              \
+			120.0f,          \
 			0,              \
 	}
 
@@ -274,7 +274,7 @@ typedef struct
 			4000.0f,        \
 	}
 
-#define Trigger_Angle_PIDInit \
+#define Trigger_Angle_Left_PIDInit \
 	{                         \
 		0,                    \
 			0,                \
@@ -283,7 +283,25 @@ typedef struct
 			0,                \
 			4.0f,             \
 			0,                \
-			50.0f,            \
+			70.0f,            \
+			0,                \
+			0,                \
+			0,                \
+			0,                \
+			6000.0f,          \
+			0,                \
+	}
+	
+#define Trigger_Angle_Right_PIDInit \
+	{                         \
+		0,                    \
+			0,                \
+			0,                \
+			0,                \
+			0,                \
+			4.0f,             \
+			0,                \
+			70.0f,            \
 			0,                \
 			0,                \
 			0,                \
@@ -317,15 +335,15 @@ typedef struct
 			0,                      \
 			0,                      \
 			0,                      \
-			2.0f,                   \
-			0,                      \
-			20.0f,                  \
+			1.0f,                  	\
+			0,                  		\
+			0,                 			\
 			0,                      \
 			0,                      \
 			0,                      \
 			0,                      \
 			3000.0f,                \
-			0,                      \
+			0,                 			\
 	}
 
 #define AutoAim_Pitch_Speed_PIDInit \
@@ -335,33 +353,51 @@ typedef struct
 			0,                      \
 			0,                      \
 			0,                      \
-			350.0f,                 \
-			0.15f,                  \
+			800.0f,                \
+			3.0f,                  	\
+			0,               				\
 			0,                      \
 			0,                      \
 			0,                      \
 			0,                      \
-			0,                      \
-			28000.0f,               \
-			4000.0f,                \
+			30000.0f,               \
+			5000.0f,                \
 	}
 
-#define AutoAim_Yaw_PIDInit \
+#define AutoAim_Yaw_Angle_PIDInit \
 	{                       \
 		0,                  \
 			0,              \
 			0,              \
 			0,              \
 			0,              \
-			400.0f,         \
-			0,              \
-			20000.0f,       \
-			0,              \
-			0,              \
+			1.0f,         	\
+			0,          		\
+			0,       				\
 			0,              \
 			0,              \
-			28000.0f,       \
 			0,              \
+			0,              \
+			3000.0f,        \
+			0,          		\
+	}
+	
+#define AutoAim_Yaw_Speed_PIDInit \
+	{                       \
+		0,                  \
+			0,              \
+			0,              \
+			0,              \
+			0,              \
+			3500.0f,        \
+			3.0f,           \
+			0,      				\
+			0,              \
+			0,              \
+			0,              \
+			0,              \
+			30000.0f,       \
+			8000.0f,        \
 	}
 extern PID_Func_t PID_Func;
 extern PID_t Chassis_Angle_PID;
@@ -376,10 +412,12 @@ extern PID_t Yaw_Angle_Start_PID;
 extern PID_t Yaw_Speed_Start_PID;
 extern PID_t Pitch_Angle_PID;
 extern PID_t Pitch_Speed_PID;
-extern PID_t Trigger_Angle_PID;
+extern PID_t Trigger_Angle_Left_PID;
+extern PID_t Trigger_Angle_Right_PID;
 extern PID_t Trigger_Speed_PID;
 extern PID_t AutoAim_Pitch_Angle_PID;
 extern PID_t AutoAim_Pitch_Speed_PID;
-extern PID_t AutoAim_Yaw_PID;
+extern PID_t AutoAim_Yaw_Angle_PID;
+extern PID_t AutoAim_Yaw_Speed_PID;
 
 #endif
